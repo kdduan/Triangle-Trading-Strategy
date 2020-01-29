@@ -21,8 +21,6 @@ def split_crumb_store(v):
 
 
 def find_crumb_store(lines):
-    # Looking for
-    # ,"CrumbStore":{"crumb":"9q.A4D1c.b9
     for l in lines:
         if re.findall(r'CrumbStore', l):
             return l
@@ -38,9 +36,6 @@ def get_page_data(symbol):
     r = requests.get(url, headers = headers)
     cookie = get_cookie_value(r)
 
-    # Code to replace possible \u002F value
-    # ,"CrumbStore":{"crumb":"FWP\u002F5EFll3U"
-    # FWP\u002F5EFll3U
     lines = r.content.decode('unicode-escape').strip(). replace('}', '\n')
     return cookie, lines.split('\n')
 
@@ -61,7 +56,6 @@ def get_data(symbol, start_date, end_date, cookie, crumb):
 
 
 def get_now_epoch():
-    # @see https://www.linuxquestions.org/questions/programming-9/python-datetime-to-epoch-4175520007/#post5244109
     return int(time.time())
 
 
@@ -114,9 +108,6 @@ def _get_cookie_crumb():
                         continue
                 _cookie = c.value
 
-        # Print the cookie and crumb
-        #print('Cookie:', _cookie)
-        #print('Crumb:', _crumb)
 
 def load_yahoo_quote(ticker, begindate, enddate, info = 'quote', format_output = 'list'):
         '''
@@ -163,14 +154,7 @@ def load_yahoo_quote(ticker, begindate, enddate, info = 'quote', format_output =
                 return adf
 
 
-#ticker_file = r'\\ad.sec.gov\users\NYRO\WongMat\intake\2. Projects\4. Price Database\Code\ticker.xls'
-#symbol_folder = r'C:\Users\duans\Documents\1. Projects\1. Price Database\Market Database\\'
 symbol_folder = r'/home/kdduan/Documents/Projects/Triangle Strategy/Market Database/' 
-# Takes in Excel file and creates list of tickers
-#def get_list(file):
-#    df = pd.read_excel(file)
-#    ticker_list = list(df['Ticker'])
-#    return ticker_list   
 
 # Write initial file of ticker information
 def write_csv_all(ticker_list):
